@@ -1,0 +1,5 @@
+server {
+    listen 80;
+    server_name officecdn.microsoft.com;
+    return 301 http://officecdn.microsoft.com.edgesuite.net$request_uri;
+}

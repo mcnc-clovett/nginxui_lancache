@@ -1,0 +1,24 @@
+# Set resolvers against DNS servers not used for local interception. You may wish to change these to your ISP's DNS servers.
+resolver 8.8.8.8 8.8.4.4 ipv6=off;
+
+# Log format for stream
+log_format  stream      'HTTPS [$time_local] $remote_addr $protocol $ssl_preread_server_name:$server_port $status';
+access_log  /var/log/nginx/access.log stream buffer=64k flush=1m;
+
+server {
+    # Pass through SSL connections upstream using SNI preread
+    listen 443;
+    proxy_buffer_size 16k;
+    ssl_preread on;
+    proxy_pass "${ssl_preread_server_name}:443";
+    
+    # Restrict each client to a set bandwidth - Eg. 1m = 10mbps
+    #proxy_download_rate 1m;
+    #proxy_upload_rate 1m;
+    
+    # Allow only internal networks in case of accidental internet exposure.
+    allow 10.0.0.0/8;
+    allow 172.16.0.0/12;
+    allow 192.168.0.0/16;
+    deny all;
+}

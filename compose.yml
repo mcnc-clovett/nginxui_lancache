@@ -1,0 +1,17 @@
+services:
+  nginx-ui:
+    image: 'uozi/nginx-ui:latest'
+    network_mode: host
+    volumes:
+        - '/var/run/docker.sock:/var/run/docker.sock'
+        - '/opt/appdata/cache:/var/cache/nginx/cache'
+        - '/opt/appdata/nginx-ui:/etc/nginx-ui'
+        # Place the nginxui_lancache config files in this dir:
+        - '/opt/appdata/nginx:/etc/nginx'
+    environment:
+        # Be sure to set your timezone
+        - TZ=US/Eastern
+    restart: always
+    container_name: nginx-ui
+    tty: true
+    stdin_open: true
