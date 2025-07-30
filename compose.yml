@@ -21,6 +21,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - WATCHTOWER_SCHEDULE="0 0 4 * * *"  # Daily at 4 AM (cron format)
+      - WATCHTOWER_SCHEDULE=0 0 4 * * *  # Daily at 4 AM (cron format)
       - WATCHTOWER_CLEANUP=true  # Remove old images after updating
       - TZ=US/Eastern
